@@ -49,6 +49,11 @@ public class WebClientServiceImpl implements WebClientService{
     private static final String GET = "GET";
     private static final String serviceKey = "DcyK94HHgmF%2BqT%2Fy39qEl4gb%2BUm1nYXHlUEuKEwgco1zuET1ugc3Y%2BCapUegKIKNByEV67JLw8Dcx%2B1HhFyyuw%3D%3D";
 
+    private static final int SIZE = 9;
+    private static String[] DEAL_YML_ARRAY= {"201601","201602","201603","201604","201605","201606","201607","201608","201609"};
+    private static String[] LAWD_CD_AARAY = {"11110","11680","11140","11740","11305"};
+
+
     public static Map<String, Object> getMapFromJSONObject(JSONObject obj) {
         if (ObjectUtils.isEmpty(obj)) {
             log.error("BAD REQUEST obj : {}", obj);
@@ -76,97 +81,102 @@ public class WebClientServiceImpl implements WebClientService{
     }
     public HouseSetupResponse getv2() throws IOException {
 
-
-        URL url = getUrl(1,1000,"11110","201705");
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        connection.setRequestMethod(GET);
-        int responseCode = connection.getResponseCode();
-
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-        StringBuffer stringBuffer = new StringBuffer();
-        String inputLine;
-
-        while ((inputLine = bufferedReader.readLine()) != null) {
-            stringBuffer.append(inputLine);
-        }
-        bufferedReader.close();
-
-        JSONObject jsonObject = XML.toJSONObject(stringBuffer.toString());
-        JSONArray jsonArray = jsonObject.getJSONObject("response")
-                .getJSONObject("body")
-                .getJSONObject("items")
-                .getJSONArray("item");
-
-        List<Map<String, Object>> list = new ArrayList<>();
-        for (Object item : jsonArray) {
-            list.add(getMapFromJSONObject((JSONObject) item));
-        }
-
+        List<Map<String, Object>> xmlData = new ArrayList<>();
         HashMap<String, HouseDto> houseDtoList = new HashMap<>();
         List<HouseDealDto> houseDealDtoList = new ArrayList<>();
 
-        for (Map<String, Object> item : list) {
+        for (int i = 0; i < LAWD_CD_AARAY.length; i++) {
 
-            try {
-                String houseId = item.get("일련번호").toString();
-                int buildYear = Integer.parseInt(item.get("건축년도").toString());
-                String roadName = item.get("도로명").toString();
-                String roadNameBonbun = item.get("도로명건물본번호코드").toString();
-                String roadNameBubun = item.get("도로명건물부번호코드").toString();
-                String roadNameSigunguCode = item.get("도로명시군구코드").toString();
-                String roadNameCode = item.get("도로명코드").toString();
-                String dong = item.get("법정동").toString();
-                String bonbun = item.get("법정동본번코드").toString();
-                String bubun = item.get("법정동부번코드").toString();
-                String apartmentName = item.get("아파트").toString();
-                String jibun = item.get("지번").toString();
+            for (int j = 0; j < DEAL_YML_ARRAY.length; j++) {
+                URL url = getUrl(1, 1000, LAWD_CD_AARAY[i], DEAL_YML_ARRAY[j]);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod(GET);
+                int responseCode = connection.getResponseCode();
 
-                houseDtoList.put(houseId, HouseDto.builder()
-                        .houseId(houseId)
-                        .buildYear(buildYear)
-                        .roadName(roadName)
-                        .roadNameBonbun(roadNameBonbun)
-                        .roadNameBubun(roadNameBubun)
-                        .roadNameSigunguCode(roadNameSigunguCode)
-                        .roadNameCode(roadNameCode)
-                        .dong(dong)
-                        .bonbun(bonbun)
-                        .bubun(bubun)
-                        .apartmentName(apartmentName)
-                        .jibun(jibun)
-                        .build());
-            } catch (NullPointerException e) {
-                log.debug("데이터 파싱 중 null 값이 존재함");
-            }
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                StringBuffer stringBuffer = new StringBuffer();
+                String inputLine;
 
-            try {
+                while ((inputLine = bufferedReader.readLine()) != null) {
+                    stringBuffer.append(inputLine);
+                }
+                bufferedReader.close();
+
+                JSONObject jsonObject = XML.toJSONObject(stringBuffer.toString());
+                JSONArray jsonArray = jsonObject.getJSONObject("response")
+                        .getJSONObject("body")
+                        .getJSONObject("items")
+                        .getJSONArray("item");
+
+                for (Object item : jsonArray) {
+                    xmlData.add(getMapFromJSONObject((JSONObject) item));
+                }
+
+                for (Map<String, Object> item : xmlData) {
+
+                    try {
+                        String houseId = item.get("일련번호").toString();
+                        int buildYear = Integer.parseInt(item.get("건축년도").toString());
+                        String roadName = item.get("도로명").toString();
+                        String roadNameBonbun = item.get("도로명건물본번호코드").toString();
+                        String roadNameBubun = item.get("도로명건물부번호코드").toString();
+                        String roadNameSigunguCode = item.get("도로명시군구코드").toString();
+                        String roadNameCode = item.get("도로명코드").toString();
+                        String dong = item.get("법정동").toString();
+                        String bonbun = item.get("법정동본번코드").toString();
+                        String bubun = item.get("법정동부번코드").toString();
+                        String apartmentName = item.get("아파트").toString();
+                        String jibun = item.get("지번").toString();
+
+                        houseDtoList.put(houseId, HouseDto.builder()
+                                .houseId(houseId)
+                                .buildYear(buildYear)
+                                .roadName(roadName)
+                                .roadNameBonbun(roadNameBonbun)
+                                .roadNameBubun(roadNameBubun)
+                                .roadNameSigunguCode(roadNameSigunguCode)
+                                .roadNameCode(roadNameCode)
+                                .dong(dong)
+                                .bonbun(bonbun)
+                                .bubun(bubun)
+                                .apartmentName(apartmentName)
+                                .jibun(jibun)
+                                .build());
+                    } catch (NullPointerException e) {
+
+                    }
+
+                    try {
 //                int housedealId = item.get("");
-                String houseId = item.get("일련번호").toString();
-                String dealAmount = item.get("거래금액").toString();
-                double area = Double.parseDouble(item.get("전용면적").toString());
-                String dealYear = item.get("년").toString();
-                String dealMonth = item.get("월").toString();
-                String dealDay = item.get("일").toString();
-                String floor = item.get("층").toString();
+                        String houseId = item.get("일련번호").toString();
+                        String dealAmount = item.get("거래금액").toString();
+                        double area = Double.parseDouble(item.get("전용면적").toString());
+                        String dealYear = item.get("년").toString();
+                        String dealMonth = item.get("월").toString();
+                        String dealDay = item.get("일").toString();
+                        String floor = item.get("층").toString();
 
-                houseDealDtoList.add(HouseDealDto.builder()
-                        .houseId(houseId)
-                        .dealAmount(dealAmount)
-                        .area(area)
-                        .dealDay(dealDay)
-                        .dealYear(dealYear)
-                        .dealMonth(dealMonth)
-                        .floor(floor)
-                        .build());
-            } catch (NullPointerException e) {
-                log.debug("데이터 파싱 중 null 값이 존재함");
+                        houseDealDtoList.add(HouseDealDto.builder()
+                                .houseId(houseId)
+                                .dealAmount(dealAmount)
+                                .area(area)
+                                .dealDay(dealDay)
+                                .dealYear(dealYear)
+                                .dealMonth(dealMonth)
+                                .floor(floor)
+                                .build());
+                    } catch (NullPointerException e) {
+
+                    }
+                }
+
+
             }
         }
 
-
-
         log.debug(houseDealDtoList.size() + " ");
         log.debug(houseDtoList.size() + " ");
+
 
         return HouseSetupResponse.builder()
                 .houseDtoList(houseDtoList)
