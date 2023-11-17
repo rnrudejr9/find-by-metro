@@ -1,7 +1,9 @@
 package com.ssafy.vue.station.model.dto;
 
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor
 public class StationCost {
-    private Station start;
     private Station end;
-    private Long cost;
+    private double cost;
 }

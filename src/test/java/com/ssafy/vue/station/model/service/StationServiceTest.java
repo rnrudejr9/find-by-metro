@@ -17,7 +17,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -26,7 +28,7 @@ class StationServiceTest {
     @InjectMocks
     StationService stationService;
 
-    private final List<Station> stationList = new ArrayList<>();
+    private final Map<String,Station> stationList = new HashMap<>();
 
     @Test
     @DisplayName("JSON Parsing TEST")
@@ -51,10 +53,10 @@ class StationServiceTest {
                     .lng(lng)
                     .lat(lat)
                     .build();
-            stationList.add(station);
+            stationList.put(name,station);
         }
 
-        for(Station s : stationList){
+        for(Station s : stationList.values()){
             System.out.println(s);
         }
 

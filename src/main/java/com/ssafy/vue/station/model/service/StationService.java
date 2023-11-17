@@ -22,10 +22,15 @@ import java.util.Map;
 public class StationService {
     private final Map<String,Station> stationList = new HashMap<>();
 
-    public void connectInject(Station a, Station b, StationCost cost){
-        a.getConnectStation().add(cost);
-        b.getConnectStation().add(cost);
+    public void connectInject(Station a, Station b, Long cost){
+        a.getConnectStation().add(new StationCost(b,cost));
+        b.getConnectStation().add(new StationCost(a,cost));
     }
+
+    public void initData(){
+        stationList.get("이촌").getConnectStation().add(new StationCost(stationList.get("가정"),100));
+    }
+
     public void init() throws IOException, ParseException {
         Object object = new JSONParser().parse(new FileReader("station/station_coordinate.json"));
         org.json.simple.JSONArray array = (JSONArray) object;
