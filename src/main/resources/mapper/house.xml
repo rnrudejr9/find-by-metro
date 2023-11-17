@@ -5,7 +5,7 @@
 <mapper namespace="com.ssafy.vue.house.model.mapper.HouseMapper">
 
     <insert id="saveHouse" parameterType="houseDto">
-        insert into house (
+        insert ignore into house (
             house_id, build_year, road_name, road_name_bonbun, road_name_bubun, road_name_sigungu_code, road_name_code, dong, bonbun, bubun, apartment_name, jibun
         ) values (
       #{houseId},
