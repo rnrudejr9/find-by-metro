@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class StationCost {
-    private Station end;
-    private double cost;
+    private String name;
+    private int cost;
+    private int transfer;
 }

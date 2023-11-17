@@ -16,6 +16,6 @@ public class Station {
     private String line;
     private Double lat;
     private Double lng;
-    private List<StationCost> connectStation;
+    private List<Station> connectStation;
 
 }

@@ -22,13 +22,10 @@ import java.util.Map;
 public class StationService {
     private final Map<String,Station> stationList = new HashMap<>();
 
-    public void connectInject(Station a, Station b, Long cost){
-        a.getConnectStation().add(new StationCost(b,cost));
-        b.getConnectStation().add(new StationCost(a,cost));
-    }
 
     public void initData(){
-        stationList.get("이촌").getConnectStation().add(new StationCost(stationList.get("가정"),100));
+        stationList.get("이촌").getConnectStation().add(stationList.get("잠실"));
+        stationList.get("잠실").getConnectStation().add(stationList.get("이촌"));
     }
 
     public void init() throws IOException, ParseException {
