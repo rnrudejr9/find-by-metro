@@ -1,6 +1,5 @@
 package com.ssafy.vue.station.model.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ssafy.vue.station.model.dto.Station;
 import com.ssafy.vue.station.model.dto.StationCost;
 import lombok.RequiredArgsConstructor;
@@ -12,22 +11,79 @@ import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-@Service
 @RequiredArgsConstructor
 @Log4j2
-public class StationService {
-    private static Map<String, Station> stationList = new HashMap<>();
+@Service
+public class StationServiceImpl{
+    private static final Map<String, Station> stationList = new HashMap<>();
 
-    public void getStationList() {
-        for(String name : stationList.keySet()){
-            log.debug(name);
+    private static final Map<String,Integer> startStationValueMap = new HashMap<>();
+    private static final Map<String,Integer> endStationValueMap = new HashMap<>();
+    private static final PriorityQueue<StationCost> priorityQueue = new PriorityQueue<>((s1, s2) -> Integer.compare(s1.getValue(),s2.getValue()));
+
+    public Map<String,Station> getStationList() {
+        return stationList;
+    }
+
+    public PriorityQueue<StationCost> findByStartAndEnd(String startStationName, String endStationName){
+        Station startStation = stationList.get(startStationName);
+        Station endStation = stationList.get(endStationName);
+
+        if(startStation == null || endStation == null){
+            log.debug("null 값이 존재함 에러 발생");
+        }
+
+        BFS(startStation, startStationValueMap);
+        BFS(endStation,endStationValueMap);
+        calcValueMap(startStationValueMap,endStationValueMap,priorityQueue);
+
+        return priorityQueue;
+    }
+
+    public PriorityQueue<StationCost> findByDijkstra(String startStationName, String endStationName){
+        Station startStation = stationList.get(startStationName);
+        Station endStation = stationList.get(endStationName);
+
+        if(startStation == null || endStation == null){
+            log.debug("null 값이 존재함 에러 발생");
+        }
+
+        DIJKSTRA();
+        return null;
+    }
+    private void DIJKSTRA(){
+
+    }
+
+    private void calcValueMap(Map<String,Integer> firstMap, Map<String,Integer> secondMap, PriorityQueue<StationCost> que){
+        for(String stationName : stationList.keySet()){
+            Integer firstValue = firstMap.get(stationName);
+            Integer secondValue = secondMap.get(stationName);
+            if(firstValue != null && secondValue != null){
+                Integer total = firstValue + secondValue;
+                que.offer(StationCost.builder().station(stationList.get(stationName)).value(total).build());
+            }
         }
     }
+    private void BFS(Station station, Map<String, Integer> stationValueMap){
+        Queue<StationCost> que = new ArrayDeque<>();
+        que.offer(StationCost.builder().station(station).value(0).build());
+        while(!que.isEmpty()){
+            StationCost cur = que.poll();
+            if(stationValueMap.containsKey(cur.getStation().getName())){
+                continue;
+            }
+            stationValueMap.put(cur.getStation().getName(),cur.getValue());
+            for(Station next: cur.getStation().getConnectStation()){
+                que.offer(StationCost.builder().station(next).value(cur.getValue()+1).build());
+            }
+        }
+    }
+
+
+
 
     public void initData() {
         insertLineData("까치산", 2, 5);
@@ -132,6 +188,8 @@ public class StationService {
         setConnectStation("영등포구청","당산","문래","영등포시장","양평");
         insertLineData("문래",2);
         setConnectStation("문래","영등포구청","신도림");
+
+
     }
 
     public static void insertLineData(String stationName, int... lines) {
@@ -181,5 +239,8 @@ public class StationService {
             stationList.put(name, station);
         }
     }
+
+
 }
+
 
