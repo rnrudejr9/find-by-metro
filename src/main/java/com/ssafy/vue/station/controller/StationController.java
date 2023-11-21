@@ -19,6 +19,7 @@ public class StationController {
     public void getStation(){
         try {
             stationService.init();
+            stationService.initData();
         }catch (Exception e){
             e.printStackTrace();
         }

@@ -9,7 +9,6 @@ import java.util.Set;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
 @ToString
 public class Station {
     private String name;
