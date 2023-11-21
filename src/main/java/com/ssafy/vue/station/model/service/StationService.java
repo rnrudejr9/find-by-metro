@@ -28,6 +28,10 @@ public class StationService {
         stationList.get("잠실").getConnectStation().add(stationList.get("이촌"));
     }
 
+    public void changeLineData(){
+//        stationList.get("역이름")
+    }
+
     public void init() throws IOException, ParseException {
         Object object = new JSONParser().parse(new FileReader("station/station_coordinate.json"));
         org.json.simple.JSONArray array = (JSONArray) object;
@@ -49,6 +53,5 @@ public class StationService {
                     .build();
             stationList.put(name,station);
         }
-
     }
 }
