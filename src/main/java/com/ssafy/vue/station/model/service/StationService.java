@@ -427,12 +427,6 @@ public class StationService {
             insertLineData("남성",7);
             setConnectStation("남성","숭실대입구","이수");
             insertLineData("이수",4,7);
-            setConnectStation("이수","남성","내방","동작","사당");
-            insertLineData("내방",7);
-            setConnectStation("내방","이수","고속터미널");
-            insertLineData("고속터미널",3,7);
-            setConnectStation("고속터미널","내방","반포");
-            insertLineData("반포",7);
             setConnectStation("반포","고속터미널","논현");
             insertLineData("논현",7);
             setConnectStation("논현","반포","학동");
@@ -460,6 +454,12 @@ public class StationService {
             setConnectStation("상봉","면목","중화");
             insertLineData("중화",7);
             setConnectStation("중화","상봉","먹골");
+            setConnectStation("이수","남성","내방","동작","사당");
+            insertLineData("내방",7);
+            setConnectStation("내방","이수","고속터미널");
+            insertLineData("고속터미널",3,7);
+            setConnectStation("고속터미널","내방","반포");
+            insertLineData("반포",7);
         }catch (NullPointerException e){
             e.printStackTrace();
         }
