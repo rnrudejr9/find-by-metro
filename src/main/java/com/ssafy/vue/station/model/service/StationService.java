@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.*;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -20,13 +21,30 @@ import java.util.Map;
 @RequiredArgsConstructor
 @Log4j2
 public class StationService {
-    private final Map<String,Station> stationList = new HashMap<>();
+    private static Map<String,Station> stationList = new HashMap<>();
 
 
-    public void initData(){
-        stationList.get("이촌").getConnectStation().add(stationList.get("잠실"));
-        stationList.get("잠실").getConnectStation().add(stationList.get("이촌"));
+    public void initData() {
+        try {
+            insertLineData("까치산","2","5");
+            setConnectStation("까치산","화곡","신정","신정네사거리");
+        }catch (NullPointerException e){
+            e.printStackTrace();
+        }
     }
+
+    public static void insertLineData(String stationName, String ...lines){
+        for(String lineNumber : lines) {
+            stationList.get(stationName).getLine().add(lineNumber);
+        }
+    }
+    public static void setConnectStation(String stationName, String ...destinationNames){
+        for(String destinationName : destinationNames) {
+            stationList.get(stationName).getConnectStation().add(stationList.get(destinationName));
+        }
+    }
+
+
 
     public void changeLineData(){
 //        stationList.get("역이름")
@@ -47,7 +65,7 @@ public class StationService {
             Station station = Station.builder()
                     .name(name)
                     .code(code)
-                    .line(line)
+                    .line(new HashSet<>())
                     .lng(lng)
                     .lat(lat)
                     .build();
@@ -55,3 +73,4 @@ public class StationService {
         }
     }
 }
+

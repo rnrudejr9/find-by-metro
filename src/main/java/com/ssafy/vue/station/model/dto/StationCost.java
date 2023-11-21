@@ -1,10 +1,13 @@
 package com.ssafy.vue.station.model.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
+
+import javax.swing.text.StyledEditorKit;
 
 @AllArgsConstructor
+@Builder
 public class StationCost {
-    private String name;
-    private int cost;
-    private int transfer;
+    private Station station;
+    private boolean isTransfer;
 }
