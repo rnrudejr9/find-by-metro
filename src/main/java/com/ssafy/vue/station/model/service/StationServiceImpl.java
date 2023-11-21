@@ -8,6 +8,10 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
@@ -23,7 +27,7 @@ public class StationServiceImpl {
     private static final Map<String, Integer> endStationValueMap = new HashMap<>();
     private static final PriorityQueue<StationCost> priorityQueue = new PriorityQueue<>((s1, s2) -> Integer.compare(s1.getValue(), s2.getValue()));
 
-    public Map<String, Station> getStationList() {
+    public static Map<String, Station> getStationList() {
         return stationList;
     }
 
@@ -57,6 +61,7 @@ public class StationServiceImpl {
     private void DIJKSTRA() {
 
     }
+
 
     private void calcValueMap(Map<String, Integer> firstMap, Map<String, Integer> secondMap, PriorityQueue<StationCost> que) {
         for (String stationName : stationList.keySet()) {
