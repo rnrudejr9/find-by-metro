@@ -1,11 +1,14 @@
 package com.ssafy.vue.station.controller;
 
+import com.ssafy.vue.station.model.dto.StationCost;
 import com.ssafy.vue.station.model.service.StationServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.PriorityQueue;
 
 @RestController
 @RequestMapping("/station")
@@ -25,6 +28,7 @@ public class StationController {
 
     @GetMapping("/calc")
     public void calcStation(@RequestParam("start") String startStation, @RequestParam("end") String endStation){
+        PriorityQueue<StationCost> priorityQueue = stationServiceImpl.findByStartAndEnd(startStation, endStation);
 
     }
 }

@@ -16,6 +16,7 @@ import java.io.IOException;
 @Log4j2
 public class HouseController {
     private final HouseService houseService;
+
     @PostMapping
     public ResponseEntity<?> saveHouse(@RequestBody HouseDto houseDto){
         log.debug(houseDto);

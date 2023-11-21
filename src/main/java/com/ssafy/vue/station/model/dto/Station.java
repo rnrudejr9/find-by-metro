@@ -17,5 +17,4 @@ public class Station {
     private Double lat;
     private Double lng;
     private Set<Station> connectStation;
-
 }
