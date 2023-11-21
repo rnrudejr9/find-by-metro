@@ -71,7 +71,7 @@ public class StationServiceImpl {
 
     private void BFS(Station station, Map<String, Integer> stationValueMap) {
         Queue<StationCost> que = new ArrayDeque<>();
-        que.offer(StationCost.builder().station(station).value(0).build());
+        que.offer(StationCost.builder().station(station).value(0).before(null).build());
         while (!que.isEmpty()) {
             StationCost cur = que.poll();
             if (stationValueMap.containsKey(cur.getStation().getName())) {
@@ -79,7 +79,20 @@ public class StationServiceImpl {
             }
             stationValueMap.put(cur.getStation().getName(), cur.getValue());
             for (Station next : cur.getStation().getConnectStation()) {
-                que.offer(StationCost.builder().station(next).value(cur.getValue() + 1).build());
+                boolean isTransfer = true;
+                if(cur.getBefore() != null){
+                    for(String curLine : cur.getBefore().getLine()){
+                        if(next.getLine().contains(curLine)){
+                            isTransfer = false;
+                        }
+                    }
+                }
+                if(isTransfer && cur.getBefore() != null){
+                    que.offer(StationCost.builder().station(next).value(cur.getValue() + 3).before(cur.getStation()).build());
+                }else{
+                    que.offer(StationCost.builder().station(next).value(cur.getValue() + 1).before(cur.getStation()).build());
+                }
+
             }
         }
     }

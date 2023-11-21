@@ -40,7 +40,7 @@ class StationServiceImplTest {
     @Test
     @DisplayName("BFS탐색 기능 테스트")
     void BFS(){
-        PriorityQueue<StationCost> priorityQueue = stationService.findByStartAndEnd("서울", "신림");
+        PriorityQueue<StationCost> priorityQueue = stationService.findByStartAndEnd("서울대입구", "노량진");
         while(!priorityQueue.isEmpty()){
             StationCost cost = priorityQueue.poll();
             log.debug(cost.getStation().getName() + " " +cost.getValue());

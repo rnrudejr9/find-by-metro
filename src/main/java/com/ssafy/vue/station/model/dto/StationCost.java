@@ -14,5 +14,6 @@ import javax.swing.text.StyledEditorKit;
 public class StationCost {
     private Station station;
     private boolean isTransfer;
+    private Station before;
     private int value;
 }
