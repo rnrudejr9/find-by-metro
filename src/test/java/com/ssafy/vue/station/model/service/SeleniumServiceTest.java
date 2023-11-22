@@ -64,21 +64,25 @@ class SeleniumServiceTest {
 
         for (String stationName : serviceStationList.keySet() ) {
 
-            //url을 드라이브 켠다
-            driver.get("https://map.naver.com/p/search/" + stationName);
-            // 정해진 초 시간 만큼 기다린다
-            driver.manage().timeouts().implicitlyWait(Duration.ofMillis(1500));
-            //html로 이동한다
-            driver.switchTo().frame(driver.findElement(By.cssSelector("iframe#searchIframe")));
-            //css 문법을 이용해 해당 html 요소들을 찾아온다
-            List<WebElement> elements = driver.findElements(By.cssSelector("span.Pb4bU"));
-            if (elements == null)
-                continue;
+            try {
+                //url을 드라이브 켠다
+                driver.get("https://map.naver.com/p/search/" + stationName + "역");
+                // 정해진 초 시간 만큼 기다린다
+                driver.manage().timeouts().implicitlyWait(Duration.ofMillis(1500));
+                //html로 이동한다
+                driver.switchTo().frame(driver.findElement(By.cssSelector("iframe#searchIframe")));
+                //css 문법을 이용해 해당 html 요소들을 찾아온다
+                List<WebElement> elements = driver.findElements(By.cssSelector("span.Pb4bU"));
+                if (elements == null)
+                    continue;
 
-            log.debug(elements.get(0).getText());
-            String[] text = elements.get(0).getText().split(" ");
-            log.debug(text[text.length - 1]);
-            ans.add(text[text.length-1]);
+                log.debug(elements.get(0).getText());
+                String[] text = elements.get(0).getText().split(" ");
+                log.debug(text[text.length - 1]);
+                ans.add(text[text.length - 1]);
+            }catch (Exception e){
+                continue;
+            }
         }
 
 

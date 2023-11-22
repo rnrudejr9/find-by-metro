@@ -3,6 +3,7 @@ package com.ssafy.vue.station.controller;
 import com.ssafy.vue.station.model.dto.StationCost;
 import com.ssafy.vue.station.model.service.StationServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,6 +25,11 @@ public class StationController {
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    @GetMapping("/list")
+    public ResponseEntity<?> getStationName(){
+        return ResponseEntity.ok().body(stationServiceImpl.getStationList().keySet().toArray(String[]::new));
     }
 
     @GetMapping("/calc")

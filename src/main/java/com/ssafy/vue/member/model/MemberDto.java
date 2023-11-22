@@ -4,6 +4,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -23,7 +25,7 @@ public class MemberDto {
 	@ApiModelProperty(value = "이메일 도메인")
 	private String emailDomain;
 	@ApiModelProperty(value = "가입일")
-	private String joinDate;
+	private LocalDateTime joinDate;
 	@ApiModelProperty(value = "refreshToken")
 	private String refreshToken;
 	
