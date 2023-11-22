@@ -636,8 +636,9 @@ public class StationServiceImpl {
         setConnectStation("상봉", "면목", "중화");
         insertLineData("중화", 7);
         setConnectStation("중화", "상봉", "먹골");
-
     }
+
+
 
     public static void insertLineData(String stationName, int... lines) {
         try {
@@ -648,6 +649,21 @@ public class StationServiceImpl {
             log.debug("호선 데이터 삽입 중 문제발생 : " + stationName);
         }
     }
+    public void insertLineData(String stationName, String dong, int... lines) {
+        try {
+            Station station = stationList.get(stationName);
+            if(station == null){
+                throw new NullPointerException();
+            }
+            station.setDong(dong);
+            for (int lineNumber : lines) {
+                station.getLine().add(String.valueOf(lineNumber));
+            }
+        } catch (NullPointerException e) {
+            log.debug("호선 데이터 삽입 중 문제발생 : " + stationName);
+        }
+    }
+
 
     public static void setConnectStation(String stationName, String... destinationNames) {
 

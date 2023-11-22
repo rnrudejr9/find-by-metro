@@ -38,6 +38,24 @@ class StationServiceImplTest {
     }
 
     @Test
+    @DisplayName("동정보 조회기능 테스트")
+    void setDong() {
+        String stationName = "까치산";
+        String dong = "동 정보";
+        String dong2 = "변경된 동 정보";
+        Map<String, Station> list = stationService.getStationList();
+        Station station = list.get(stationName);
+        station.setDong(dong);
+        list.put(stationName,station);
+
+        Assertions.assertThat(list.get(stationName).getDong()).isEqualTo(dong);
+
+
+        stationService.insertLineData(stationName,dong2,2);
+        log.debug(stationService.getStationList().get(stationName).getDong());
+    }
+
+    @Test
     @DisplayName("BFS탐색 기능 테스트")
     void BFS(){
         PriorityQueue<StationCost> priorityQueue = stationService.findByStartAndEnd("서울대입구", "노량진");

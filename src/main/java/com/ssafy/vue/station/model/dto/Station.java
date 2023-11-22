@@ -18,4 +18,8 @@ public class Station {
     private Double lng;
     private Set<Station> connectStation;
     private String dong;
+
+    public void setDong(String dong){
+        this.dong = dong;
+    }
 }
