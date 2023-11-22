@@ -1,5 +1,6 @@
 package com.ssafy.vue.member.model.service;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -47,6 +48,15 @@ public class MemberServiceImpl implements MemberService {
 		map.put("userId", userId);
 		map.put("token", null);
 		memberMapper.deleteRefreshToken(map);
+	}
+
+	@Override
+	public void join(MemberDto memberDto) throws SQLException {
+		MemberDto dto = memberMapper.userInfo(memberDto.getUserId());
+		if(dto != null){
+			throw new SQLException();
+		}
+		memberMapper.join(memberDto);
 	}
 
 }

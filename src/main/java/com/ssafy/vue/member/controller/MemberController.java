@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.ssafy.vue.house.model.dto.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,6 +35,23 @@ public class MemberController {
 		super();
 		this.memberService = memberService;
 		this.jwtUtil = jwtUtil;
+	}
+
+	@PostMapping("/join")
+	public ResponseEntity<Map<String, Object>> join(@RequestBody @ApiParam(value = "로그인 시 필요한 회원정보(아이디, 비밀번호).", required = true) MemberDto memberDto){
+		log.debug("join user : {}", memberDto);
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		HttpStatus status = HttpStatus.ACCEPTED;
+		try {
+			memberService.join(memberDto);
+			resultMap.put("message","success");
+			status = HttpStatus.OK;
+		}catch (Exception e){
+			log.debug("회원가입 에러 발생 : {}", e);
+			resultMap.put("message", e.getMessage());
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+		}
+		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
 
 	@ApiOperation(value = "로그인", notes = "아이디와 비밀번호를 이용하여 로그인 처리.")
