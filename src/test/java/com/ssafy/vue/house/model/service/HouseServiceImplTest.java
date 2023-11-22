@@ -17,7 +17,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@ExtendWith(SpringExtension.class)
+@ExtendWith(MockitoExtension.class)
 @MybatisTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Log4j2
@@ -26,7 +26,7 @@ class HouseServiceImplTest {
     private HouseMapper mapper;
     @Test
     void findHouseByDong() {
-        List<HouseDto> house = mapper.findHouseByDong("사직동");
+        List<HouseDto> house = mapper.findHouseByDong("신림동");
         for(HouseDto houseDto : house){
             log.debug(houseDto);
         }

@@ -52,10 +52,10 @@ public class WebClientServiceImpl implements WebClientService{
     private static final int SIZE = 9;
     private static String[] DEAL_YML_ARRAY= {
 //            "201601","201602","201603","201604","201605","201606","201607","201608","201609","201610","201611","201612",
-    "201701"
+//    "201701"
 //            ,"201702","201703","201704","201705"
 //            ,"201706","201707","201708","201709","201710","201711","201712"
-//    ,"201801","201802","201803","201804","201805","201806","201807","201808","201809","201810","201811","201812"
+    "201801","201802","201803","201804","201805","201806","201807","201808","201809","201810","201811","201812"
     };
     private static String[] LAWD_CD_AARAY = {"11110","11680","11140","11740","11305","11500"
             ,"11620","11215","11530","11545","11350","11320","11230","11590","11440","11410",
@@ -181,65 +181,9 @@ public class WebClientServiceImpl implements WebClientService{
 
             }
         }
-
-        log.debug(houseDealDtoList.size() + " ");
-        log.debug(houseDtoList.size() + " ");
-
-
         return HouseSetupResponse.builder()
                 .houseDtoList(houseDtoList)
                 .houseDealDtoList(houseDealDtoList)
                 .build();
-    }
-    public void get() throws IOException {
-        String origin = "http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptTradeDev";
-        String key = "DcyK94HHgmF+qT/y39qEl4gb+Um1nYXHlUEuKEwgco1zuET1ugc3Y+CapUegKIKNByEV67JLw8Dcx+1HhFyyuw==";
-        String key2 = "DcyK94HHgmF%2BqT%2Fy39qEl4gb%2BUm1nYXHlUEuKEwgco1zuET1ugc3Y%2BCapUegKIKNByEV67JLw8Dcx%2B1HhFyyuw%3D%3D";
-        String decord = "DcyK94HHgmF+qT/y39qEl4gb+Um1nYXHlUEuKEwgco1zuET1ugc3Y+CapUegKIKNByEV67JLw8Dcx+1HhFyyuw==";
-
-        String ans = "http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptTradeDev?serviceKey=DcyK94HHgmF%2BqT%2Fy39qEl4gb%2BUm1nYXHlUEuKEwgco1zuET1ugc3Y%2BCapUegKIKNByEV67JLw8Dcx%2B1HhFyyuw%3D%3D&pageNo=1&numOfRows=10&LAWD_CD=11110&DEAL_YMD=201512";
-
-        String pageNo = "1";
-        String numOfRows = "10";
-        String LAWD_CD = "11110";
-        String DEAL_YMD = "201512";
-
-        StringBuilder uri = new StringBuilder();
-        uri.append(origin);
-        uri.append("?serviceKey="+decord);
-        uri.append("&pageNo="+pageNo);
-        uri.append("&numOfRows="+numOfRows);
-        uri.append("&LAWD_CD="+LAWD_CD);
-        uri.append("&DEAL_YMD="+DEAL_YMD);
-
-        RestTemplate restTemplate = new RestTemplate();
-        String object = restTemplate.getForObject(uri.toString(), String.class);
-        log.debug("object " + object);
-        ResponseEntity<String> entity1 = restTemplate.getForEntity(uri.toString(), String.class);
-        log.debug("entity " + entity1);
-
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.setContentType(MediaType.APPLICATION_XML);
-        HttpEntity entity = new HttpEntity(httpHeaders);
-        ResponseEntity<String> response = restTemplate.exchange(uri.toString(), HttpMethod.GET, entity, String.class);
-
-        log.debug(response.toString());
-        log.debug(uri.toString());
-        log.debug(ans);
-
-        log.debug(ans.equals(uri.toString())+ " ");
-
-
-//        String response = restTemplate.getForObject(temp,String.class);
-
-//        JSONObject jsonObject = XML.toJSONObject(response);
-
-//        log.debug(jsonObject.toString());
-//
-//        JSONObject object = jsonObject.getJSONObject("response").getJSONObject("items");
-//
-//        log.debug(object.toString());
-
-
     }
 }

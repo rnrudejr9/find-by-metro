@@ -7,11 +7,15 @@ import com.ssafy.vue.house.model.dto.HouseResponseDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.jdbc.SQL;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.stereotype.Component;
 
 import java.sql.SQLException;
 import java.util.List;
 
 @Mapper
+@Component
 public interface HouseMapper {
     void saveHouse(HouseDto houseDto) throws SQLException;
     void saveHouseDeal(HouseDealDto houseDealDto) throws SQLException;

@@ -36,4 +36,9 @@ public class HouseController {
         return ResponseEntity.ok().body(null);
     }
 
+    @GetMapping()
+    public ResponseEntity<?> findHouseByDong(@RequestParam("dong") String dong){
+        return ResponseEntity.ok().body(houseService.findHouseByDong(dong));
+    }
+
 }

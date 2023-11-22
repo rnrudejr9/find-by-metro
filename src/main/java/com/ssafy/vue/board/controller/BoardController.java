@@ -36,7 +36,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class BoardController {
 
-	private BoardService boardService;
+	private final BoardService boardService;
 
 	public BoardController(BoardService boardService) {
 		super();

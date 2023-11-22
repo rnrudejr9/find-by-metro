@@ -6,6 +6,5 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 
 public interface WebClientService {
-    void get() throws IOException;
     HouseSetupResponse getv2() throws IOException;
 }

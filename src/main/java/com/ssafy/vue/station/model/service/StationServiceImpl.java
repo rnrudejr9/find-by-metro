@@ -109,6 +109,7 @@ public class StationServiceImpl {
 
     public void initData() {
         insertLineData("까치산", 2, 5);
+        insertDongData("까치산","무슨동");
         setConnectStation("까치산", "화곡", "신정", "신정네거리");
         insertLineData("신정네거리", 2);
         setConnectStation("신정네거리", "까치산", "양천구청");
@@ -653,18 +654,17 @@ public class StationServiceImpl {
         }
     }
 
-    public void insertLineData(String stationName, String dong, int... lines) {
+    public void insertDongData(String stationName, String... dong) {
         try {
             Station station = stationList.get(stationName);
             if (station == null) {
                 throw new NullPointerException();
             }
-            station.setDong(dong);
-            for (int lineNumber : lines) {
-                station.getLine().add(String.valueOf(lineNumber));
+            for (String detailDong : dong) {
+                station.getDong().add(detailDong);
             }
         } catch (NullPointerException e) {
-            log.debug("호선 데이터 삽입 중 문제발생 : " + stationName);
+            log.debug("동 데이터 삽입 중 문제발생 : " + stationName);
         }
     }
 
@@ -702,6 +702,7 @@ public class StationServiceImpl {
                     .lng(lng)
                     .lat(lat)
                     .connectStation(new HashSet<>())
+                    .dong(new HashSet<>())
                     .build();
             stationList.put(name, station);
         }

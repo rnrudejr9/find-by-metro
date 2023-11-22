@@ -45,13 +45,12 @@ class StationServiceImplTest {
         String dong2 = "변경된 동 정보";
         Map<String, Station> list = stationService.getStationList();
         Station station = list.get(stationName);
-        station.setDong(dong);
         list.put(stationName,station);
+;
 
+
+        stationService.insertDongData(stationName,dong2);
         Assertions.assertThat(list.get(stationName).getDong()).isEqualTo(dong);
-
-
-        stationService.insertLineData(stationName,dong2,2);
         log.debug(stationService.getStationList().get(stationName).getDong());
     }
 

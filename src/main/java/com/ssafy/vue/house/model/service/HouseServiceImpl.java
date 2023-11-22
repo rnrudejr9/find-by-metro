@@ -22,18 +22,11 @@ public class HouseServiceImpl implements HouseService {
     private final WebClientService webClientService;
     private final StationServiceImpl stationService;
 
-    public void findHouseByStationDong() {
-        PriorityQueue<StationCost> stationCostPriorityQueue = stationService.getPriorityQueue();
-        while (!stationCostPriorityQueue.isEmpty()) {
-            StationCost stationCost = stationCostPriorityQueue.poll();
-            String dong = stationCost.getStation().getDong();
-        }
-    }
-
 
     public List<HouseDto> findHouseByDong(String dong) {
         return mapper.findHouseByDong(dong);
     }
+
 
     public HouseDto saveHouse(HouseDto houseDto) {
         try {

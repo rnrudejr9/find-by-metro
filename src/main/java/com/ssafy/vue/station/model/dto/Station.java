@@ -17,9 +17,6 @@ public class Station {
     private Double lat;
     private Double lng;
     private Set<Station> connectStation;
-    private String dong;
+    private Set<String> dong;
 
-    public void setDong(String dong){
-        this.dong = dong;
-    }
 }
