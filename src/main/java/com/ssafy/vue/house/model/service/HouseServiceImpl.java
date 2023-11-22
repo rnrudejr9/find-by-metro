@@ -17,27 +17,28 @@ import java.util.PriorityQueue;
 
 @Service
 @RequiredArgsConstructor
-public class HouseServiceImpl implements HouseService{
+public class HouseServiceImpl implements HouseService {
     private final HouseMapper mapper;
     private final WebClientService webClientService;
     private final StationServiceImpl stationService;
 
-    public void findHouseByStationDong(){
+    public void findHouseByStationDong() {
         PriorityQueue<StationCost> stationCostPriorityQueue = stationService.getPriorityQueue();
-        while(!stationCostPriorityQueue.isEmpty()){
+        while (!stationCostPriorityQueue.isEmpty()) {
             StationCost stationCost = stationCostPriorityQueue.poll();
             String dong = stationCost.getStation().getDong();
         }
     }
 
 
-    public List<HouseDto> findHouseByDong(String dong){
+    public List<HouseDto> findHouseByDong(String dong) {
         return mapper.findHouseByDong(dong);
     }
-    public HouseDto saveHouse(HouseDto houseDto){
+
+    public HouseDto saveHouse(HouseDto houseDto) {
         try {
             mapper.saveHouse(houseDto);
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
@@ -45,20 +46,35 @@ public class HouseServiceImpl implements HouseService{
 
     @Override
     public HouseDealDto saveHouseDeal(HouseDealDto houseDealDto) {
-        try{
+        try {
             mapper.saveHouseDeal(houseDealDto);
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
     }
 
 
-
     @Override
     public void initData() throws IOException {
         HouseSetupResponse houseSetupResponse = webClientService.getv2();
-        houseSetupResponse.getHouseDtoList().values().forEach(this::saveHouse);
-        houseSetupResponse.getHouseDealDtoList().forEach(this::saveHouseDeal);
+        for (HouseDto data : houseSetupResponse.getHouseDtoList().values()) {
+            try {
+                saveHouse(data);
+            } catch (Exception e) {
+                continue;
+            }
+        }
+        for (HouseDealDto data : houseSetupResponse.getHouseDealDtoList()) {
+            try {
+                saveHouseDeal(data);
+            } catch (Exception e) {
+                continue;
+            }
+        }
+
+
+//        houseSetupResponse.getHouseDtoList().values().forEach(this::saveHouse);
+//        houseSetupResponse.getHouseDealDtoList().forEach(this::saveHouseDeal);
     }
 }
