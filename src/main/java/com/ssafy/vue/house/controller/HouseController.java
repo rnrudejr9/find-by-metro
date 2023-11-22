@@ -37,8 +37,15 @@ public class HouseController {
     }
 
     @GetMapping()
-    public ResponseEntity<?> findHouseByDong(@RequestParam("dong") String dong){
-        return ResponseEntity.ok().body(houseService.findHouseByDong(dong));
+    public ResponseEntity<?> findHouseByDong(@RequestParam("start") String start,@RequestParam("end") String end, @RequestParam("money") String money){
+        return ResponseEntity.ok().body(houseService.findHouseByDong(start,end,money));
     }
+
+    @GetMapping("/deal")
+    public ResponseEntity<?> findHouseDealByHouseId(@RequestParam String houseId){
+        return ResponseEntity.ok().body(houseService.findHouseDealByHouseId(houseId));
+    }
+
+
 
 }

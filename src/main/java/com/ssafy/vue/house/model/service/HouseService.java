@@ -12,6 +12,7 @@ public interface HouseService {
     HouseDto saveHouse(HouseDto houseDto);
     HouseDealDto saveHouseDeal(HouseDealDto houseDealDto);
     void initData() throws IOException;
-    public List<HouseDto> findHouseByDong(String dong);
+    public List<HouseDto> findHouseByDong(String start,String end, String money);
 
+    List<HouseDealDto> findHouseDealByHouseId(String houseId);
 }

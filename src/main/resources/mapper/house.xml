@@ -37,11 +37,36 @@
         )
     </insert>
 
-    <select id="findHouseDealByHouseAndDong" parameterType="houseRequestDto" resultType="houseResponseDto">
-        select *
-        from houseDeal d left join house h
-        on #{houseId} = #{houseDealId}
-        where h.dong = #{dong};
+    <select id="findHouseByDong" resultType="hashmap">
+        select house_id as houseId, build_year as buildYear,road_name as roadName,road_name_bonbun as roadNameBonbun,
+            road_name_bubun as roadNameBubun,
+            road_name_code as roadNameCode,
+            road_name_sigungu_code as roadNameSigunguCode,
+            dong,
+            bubun,
+            apartment_name as apartmentName,
+            jibun
+            from house
+            where dong in
+            <foreach collection="dongList" item="arr" open="(" close=")" separator=",">
+                 #{arr}
+            </foreach>
+    </select>
+
+    <select id="findHouseDealByHouseId" resultType="hashmap">
+        select
+            housedeal_id as housedealId,
+            house_id as houseId,
+            deal_amount as dealAmount,
+            area as area,
+            deal_year as dealYear,
+            deal_month as dealMonth,
+            deal_day as dealDay,
+            floor as floor
+        from
+            housedeal
+        where house_id = #{houseId}
+        order by dealAmount asc
     </select>
 
 

@@ -1,30 +1,46 @@
 package com.ssafy.vue.house.model.service;
 
-import com.ssafy.vue.house.model.dto.HouseDealDto;
-import com.ssafy.vue.house.model.dto.HouseDto;
-import com.ssafy.vue.house.model.dto.HouseRequestDto;
-import com.ssafy.vue.house.model.dto.HouseSetupResponse;
+import com.ssafy.vue.house.model.dto.*;
 import com.ssafy.vue.house.model.mapper.HouseMapper;
 import com.ssafy.vue.station.model.dto.StationCost;
 import com.ssafy.vue.station.model.service.StationServiceImpl;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.List;
-import java.util.PriorityQueue;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
+@Log4j2
 public class HouseServiceImpl implements HouseService {
     private final HouseMapper mapper;
     private final WebClientService webClientService;
     private final StationServiceImpl stationService;
 
 
-    public List<HouseDto> findHouseByDong(String dong) {
-        return mapper.findHouseByDong(dong);
+
+    public List<HouseDto> findHouseByDong(String start,String end, String money) {
+        PriorityQueue<StationCost> priorityQueue = stationService.findByStartAndEnd(start, end);
+        List<StationCost> stationCosts = priorityQueue.stream().toList();
+
+        StationCost cost = stationCosts.get(0);
+        Set<String> dongSet = cost.getStation().getDong();
+        String[] dongList = dongSet.toArray(String[]::new);
+
+        /**
+         * 지워야할 부분
+         */
+        dongList = new String[] {"역삼동","신림동"};
+
+        return mapper.findHouseByDong(dongList);
+    }
+
+    @Override
+    public List<HouseDealDto> findHouseDealByHouseId(String houseId) {
+        return mapper.findHouseDealByHouseId(houseId);
     }
 
 
