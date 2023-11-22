@@ -31,6 +31,10 @@ public class StationServiceImpl {
         return stationList;
     }
 
+    public PriorityQueue<StationCost> getPriorityQueue() {
+        return priorityQueue;
+    }
+
     public PriorityQueue<StationCost> findByStartAndEnd(String startStationName, String endStationName) {
         Station startStation = stationList.get(startStationName);
         Station endStation = stationList.get(endStationName);
@@ -85,16 +89,16 @@ public class StationServiceImpl {
             stationValueMap.put(cur.getStation().getName(), cur.getValue());
             for (Station next : cur.getStation().getConnectStation()) {
                 boolean isTransfer = true;
-                if(cur.getBefore() != null){
-                    for(String curLine : cur.getBefore().getLine()){
-                        if(next.getLine().contains(curLine)){
+                if (cur.getBefore() != null) {
+                    for (String curLine : cur.getBefore().getLine()) {
+                        if (next.getLine().contains(curLine)) {
                             isTransfer = false;
                         }
                     }
                 }
-                if(isTransfer && cur.getBefore() != null){
+                if (isTransfer && cur.getBefore() != null) {
                     que.offer(StationCost.builder().station(next).value(cur.getValue() + 3).before(cur.getStation()).build());
-                }else{
+                } else {
                     que.offer(StationCost.builder().station(next).value(cur.getValue() + 1).before(cur.getStation()).build());
                 }
 
@@ -639,7 +643,6 @@ public class StationServiceImpl {
     }
 
 
-
     public static void insertLineData(String stationName, int... lines) {
         try {
             for (int lineNumber : lines) {
@@ -649,10 +652,11 @@ public class StationServiceImpl {
             log.debug("호선 데이터 삽입 중 문제발생 : " + stationName);
         }
     }
+
     public void insertLineData(String stationName, String dong, int... lines) {
         try {
             Station station = stationList.get(stationName);
-            if(station == null){
+            if (station == null) {
                 throw new NullPointerException();
             }
             station.setDong(dong);

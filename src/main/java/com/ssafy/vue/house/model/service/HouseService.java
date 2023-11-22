@@ -9,4 +9,5 @@ public interface HouseService {
     HouseDto saveHouse(HouseDto houseDto);
     HouseDealDto saveHouseDeal(HouseDealDto houseDealDto);
     void initData() throws IOException;
+
 }

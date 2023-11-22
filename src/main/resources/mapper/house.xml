@@ -37,5 +37,12 @@
         )
     </insert>
 
+    <select id="findHouseDealByHouseAndDong" parameterType="houseRequestDto" resultType="houseResponseDto">
+        select *
+        from houseDeal d left join house h
+        on #{houseId} = #{houseDealId}
+        where h.dong = #{dong};
+    </select>
+
 
 </mapper>
