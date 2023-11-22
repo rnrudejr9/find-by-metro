@@ -27,7 +27,7 @@ public class StationServiceImpl {
     private static final Map<String, Integer> endStationValueMap = new HashMap<>();
     private static final PriorityQueue<StationCost> priorityQueue = new PriorityQueue<>((s1, s2) -> Integer.compare(s1.getValue(), s2.getValue()));
 
-    public static Map<String, Station> getStationList() {
+    public Map<String, Station> getStationList() {
         return stationList;
     }
 
