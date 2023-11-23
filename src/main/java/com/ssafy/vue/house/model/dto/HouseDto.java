@@ -24,4 +24,32 @@ public class HouseDto {
     private String bubun;
     private String apartmentName;
     private String jibun;
+
+    public HouseResponseDto toResponse(){
+        StringBuilder markPosition = new StringBuilder();
+        markPosition.append(roadName).append(" ");
+        int pbonbun = Integer.parseInt(roadNameBonbun);
+        int pbubun = Integer.parseInt(roadNameBubun);
+        if(pbonbun != 0){
+            markPosition.append(pbonbun);
+        }
+        if (pbubun != 0){
+            markPosition.append("-").append(pbubun);
+        }
+        return HouseResponseDto.builder()
+                .houseId(houseId)
+                .buildYear(buildYear)
+                .roadName(roadName)
+                .roadNameBonbun(roadNameBonbun)
+                .roadNameBubun(roadNameBubun)
+                .roadNameCode(roadNameCode)
+                .roadNameSigunguCode(roadNameSigunguCode)
+                .dong(dong)
+                .bonbun(bonbun)
+                .bubun(bubun)
+                .apartmentName(apartmentName)
+                .jibun(jibun)
+                .markPosition(markPosition.toString())
+                .build();
+    }
 }
