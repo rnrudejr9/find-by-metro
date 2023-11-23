@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import net.bytebuddy.matcher.FilterableList;
 import org.apache.ibatis.jdbc.Null;
 import org.apache.tomcat.util.http.parser.Host;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.XML;
@@ -51,15 +52,17 @@ public class WebClientServiceImpl implements WebClientService{
 
     private static final int SIZE = 9;
     private static String[] DEAL_YML_ARRAY= {
+            "201601"
 //            "201601","201602","201603","201604","201605","201606","201607","201608","201609","201610","201611","201612",
 //    "201701"
 //            ,"201702","201703","201704","201705"
 //            ,"201706","201707","201708","201709","201710","201711","201712"
-    "201801","201802","201803","201804","201805","201806","201807","201808","201809","201810","201811","201812"
+//    "201801","201802","201803","201804","201805","201806","201807","201808","201809","201810","201811","201812"
     };
     private static String[] LAWD_CD_AARAY = {"11110","11680","11140","11740","11305","11500"
-            ,"11620","11215","11530","11545","11350","11320","11230","11590","11440","11410",
-    "11650","11200","11290","11710","11470","11560","11170","11380","11110","11260"};
+//            ,"11620","11215","11530","11545","11350","11320","11230","11590","11440","11410",
+//    "11650","11200","11290","11710","11470","11560","11170","11380","11110","11260"
+    };
 
 
     public static Map<String, Object> getMapFromJSONObject(JSONObject obj) {

@@ -25,25 +25,36 @@ public class HouseServiceImpl implements HouseService {
 
 
 
-    public List<HouseDto> findHouseByDong(String start,String end, String money) {
+    public List<HouseDto> findHouseByDong(String start,String end, String money, String page) {
         PriorityQueue<StationCost> priorityQueue = stationService.findByStartAndEnd(start, end);
         List<StationCost> stationCosts = priorityQueue.stream().toList();
 
-        StationCost cost = stationCosts.get(0);
+        StationCost cost = stationCosts.get(Integer.parseInt(page));
+
         Set<String> dongSet = cost.getStation().getDong();
         String[] dongList = dongSet.toArray(String[]::new);
 
         /**
          * 지워야할 부분
          */
-        dongList = new String[] {"역삼동","신림동"};
+        String[][] dongListArray = new String[5][2];
+        dongListArray[0] = new String[] {"역삼동","신림동"};
+        dongListArray[1] = new String[] {"삼성동"};
+        dongListArray[2] = new String[] {"대치동"};
+        dongListArray[3] = new String[] {"수서동"};
+        dongListArray[4] = new String[] {"청담동"};
 
-        return mapper.findHouseByDong(dongList);
+        return mapper.findHouseByDong(dongListArray[Integer.parseInt(page)]);
     }
 
     @Override
     public List<HouseDealDto> findHouseDealByHouseId(String houseId) {
         return mapper.findHouseDealByHouseId(houseId);
+    }
+
+    @Override
+    public HouseDto findByHouseId(String houseId) {
+        return mapper.findByHouseId(houseId);
     }
 
 

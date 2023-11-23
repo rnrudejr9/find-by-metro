@@ -48,4 +48,6 @@ class HouseControllerTest {
         mockMvc.perform(get("/vue/house/" + dong)) // 만들어놓은 HelloController에 GET, POST 등의 메소드와 함께 Mock 이용하여 가상으로 접속
                 .andExpect(status().isOk());
     }
+
+
 }

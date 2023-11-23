@@ -4,6 +4,7 @@ import com.ssafy.vue.house.model.dto.HouseDto;
 import com.ssafy.vue.house.model.mapper.HouseMapper;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -31,5 +32,14 @@ class HouseServiceImplTest {
             log.debug(houseDto);
         }
         log.debug(house.size());
+    }
+    @Test
+    @DisplayName("/house?id=?")
+    public void findByHouseId(){
+        String houseId = "11110-101";
+        HouseDto houseDto = mapper.findByHouseId(houseId);
+
+        log.debug(houseDto);
+
     }
 }

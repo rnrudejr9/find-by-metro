@@ -33,4 +33,16 @@ public interface HouseMapper {
 //            " from house where dong = #{dong}")
     List<HouseDto> findHouseByDong(String[] dongList);
     List<HouseDealDto> findHouseDealByHouseId(String houseId);
+
+    @Select("select house_id as houseId, build_year as buildYear, road_name as roadName," +
+            "road_name_bonbun as roadNameBonbun," +
+            "road_name_bubun as roadNameBubun," +
+            "road_name_code as roadNameCode," +
+            "road_name_sigungu_code as roadNameSigunguCode," +
+            "dong," +
+            "bubun," +
+            "apartment_name as apartmentName," +
+            "jibun" +
+            " from house where house_id = #{houseId}")
+    HouseDto findByHouseId(String houseId);
 }
