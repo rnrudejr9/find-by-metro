@@ -18,5 +18,11 @@ public class Station {
     private Double lng;
     private Set<Station> connectStation;
     private Set<String> dong;
-
+    public StationResponseDto toDto(){
+        return StationResponseDto.builder()
+                .name(name)
+                .lat(lat)
+                .lng(lng)
+                .build();
+    }
 }

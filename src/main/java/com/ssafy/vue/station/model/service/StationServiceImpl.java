@@ -2,6 +2,7 @@ package com.ssafy.vue.station.model.service;
 
 import com.ssafy.vue.station.model.dto.Station;
 import com.ssafy.vue.station.model.dto.StationCost;
+import com.ssafy.vue.station.model.dto.StationResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.json.simple.JSONObject;
@@ -709,6 +710,9 @@ public class StationServiceImpl {
     }
 
 
+    public StationResponseDto findByStationName(String stationName) {
+        return stationList.get(stationName).toDto();
+    }
 }
 
 
