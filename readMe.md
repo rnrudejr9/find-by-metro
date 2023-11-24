@@ -37,7 +37,7 @@
 
 # ERD
 
-![skils.PNG](gif%2Fskils.PNG)
+![erd.png](/gif/erd.PNG)
 
 ---
 
