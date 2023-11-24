@@ -15,7 +15,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Mapper
-@Component
 public interface HouseMapper {
     void saveHouse(HouseDto houseDto) throws SQLException;
     void saveHouseDeal(HouseDealDto houseDealDto) throws SQLException;
@@ -31,7 +30,7 @@ public interface HouseMapper {
 //            "apartment_name as apartmentName," +
 //            "jibun" +
 //            " from house where dong = #{dong}")
-    List<HouseDto> findHouseByDong(String[] dongList);
+    List<HouseDto> findHouseByDong(String[] dongList, String money);
     List<HouseDealDto> findHouseDealByHouseId(String houseId);
 
     @Select("select house_id as houseId, build_year as buildYear, road_name as roadName," +

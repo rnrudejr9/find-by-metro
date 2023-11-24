@@ -24,7 +24,6 @@ public class HouseServiceImpl implements HouseService {
     private final StationServiceImpl stationService;
 
 
-
     public List<HouseDto> findHouseByDong(String start,String end, String money, String page) {
         PriorityQueue<StationCost> priorityQueue = stationService.findByStartAndEnd(start, end);
         List<StationCost> stationCosts = priorityQueue.stream().toList();
@@ -38,13 +37,13 @@ public class HouseServiceImpl implements HouseService {
          * 지워야할 부분
          */
         String[][] dongListArray = new String[5][2];
-        dongListArray[0] = new String[] {"역삼동","신림동"};
-        dongListArray[1] = new String[] {"삼성동"};
-        dongListArray[2] = new String[] {"대치동"};
-        dongListArray[3] = new String[] {"수서동"};
-        dongListArray[4] = new String[] {"청담동"};
+        dongListArray[0] = new String[] {"신도림동","문래동"};
+        dongListArray[1] = new String[] {"대림동"};
+        dongListArray[2] = new String[] {"구로동"};
+        dongListArray[3] = new String[] {"신길동"};
+        dongListArray[4] = new String[] {"영등포동"};
 
-        return mapper.findHouseByDong(dongListArray[Integer.parseInt(page)]);
+        return mapper.findHouseByDong(dongListArray[Integer.parseInt(page)],money);
     }
 
     @Override

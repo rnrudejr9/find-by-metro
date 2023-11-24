@@ -27,7 +27,7 @@ class HouseServiceImplTest {
     private HouseMapper mapper;
     @Test
     void findHouseByDong() {
-        List<HouseDto> house = mapper.findHouseByDong(new String[]{"신림동","서초동"});
+        List<HouseDto> house = mapper.findHouseByDong(new String[]{"신림동","서초동"},"11000");
         for(HouseDto houseDto : house){
             log.debug(houseDto);
         }
