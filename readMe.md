@@ -227,3 +227,12 @@ getHousedeal(
 
 ---
 
+# 마주쳤던 이슈들
+
+![issue.PNG](gif%2Fissue.PNG)
+
+그중에서 정말 힘들었던 것
+
+1. 중간지점 알고리즘 어떻게 할까
+2. 마이바티스 결과가 list 가 아니라 list 안에 map 이 있다
+3. kakaoMap marker..
