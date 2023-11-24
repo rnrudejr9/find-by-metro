@@ -17,6 +17,37 @@
 
 ---
 
+# HOW TO START 
+
+### SpringBoot - back ( IDE : IntelliJ 2023U )
+
+```
+git clone server
+```
+```
+mysqlworkbench - /sql/init.sql 실행
+```
+```
+localhost:80/vue/house/init 호출 - 공공데이터 API to Local DataBase
+```
+```
+localhost:80/vue/station 호출 - 지하철 노드 연관관계 설정 완료
+```
+---
+
+### Vue - front ( IDE : VSCode )
+```
+git clone frontend
+```
+```
+npm install
+```
+```
+npm run dev
+```
+
+
+---
 
 # 핵심 로직 설명
 
