@@ -37,5 +37,38 @@
         )
     </insert>
 
+    <select id="findHouseByDong" resultType="hashmap">
+        select distinct h.house_id as houseId, h.build_year as buildYear , h.road_name as roadName, h.road_name_bonbun as roadNameBonbun,
+        h.road_name_bubun as roadNameBubun,
+        h.road_name_code as roadNameCode,
+        h.road_name_sigungu_code as roadNameSigunguCode,
+        h.dong,
+        h.bubun,
+        h.apartment_name as apartmentName,
+        h.jibun
+        from house h left join housedeal d on h.house_id = d.house_id
+        where h.dong in
+            <foreach collection="dongList" item="arr" open="(" close=")" separator=",">
+                 #{arr}
+            </foreach>
+        and <![CDATA[CAST(replace(d.deal_amount,',','') as UNSIGNED) < #{money}]]>
+    </select>
+
+    <select id="findHouseDealByHouseId" resultType="hashmap">
+        select
+            housedeal_id as housedealId,
+            house_id as houseId,
+            deal_amount as dealAmount,
+            area as area,
+            deal_year as dealYear,
+            deal_month as dealMonth,
+            deal_day as dealDay,
+            floor as floor
+        from
+            housedeal
+        where house_id = #{houseId}
+        order by dealAmount asc
+    </select>
+
 
 </mapper>

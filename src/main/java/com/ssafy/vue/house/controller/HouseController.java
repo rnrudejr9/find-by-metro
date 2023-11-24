@@ -16,10 +16,17 @@ import java.io.IOException;
 @Log4j2
 public class HouseController {
     private final HouseService houseService;
+
     @PostMapping
     public ResponseEntity<?> saveHouse(@RequestBody HouseDto houseDto){
         log.debug(houseDto);
         return ResponseEntity.ok().body(houseService.saveHouse(houseDto));
+    }
+
+
+    @GetMapping("/info")
+    public ResponseEntity<?> findByHouseId(@RequestParam String houseId){
+        return ResponseEntity.ok().body(houseService.findByHouseId(houseId));
     }
 
     @PostMapping("/deal")
@@ -34,5 +41,18 @@ public class HouseController {
         houseService.initData();
         return ResponseEntity.ok().body(null);
     }
+
+    @GetMapping()
+    public ResponseEntity<?> findHouseByDong(@RequestParam("start") String start,@RequestParam("end") String end, @RequestParam(value = "money" ,required = false) String money
+    ,@RequestParam(value = "page", required = false) String page){
+        return ResponseEntity.ok().body(houseService.findHouseByDong(start,end,money,page));
+    }
+
+    @GetMapping("/deal")
+    public ResponseEntity<?> findHouseDealByHouseId(@RequestParam String houseId){
+        return ResponseEntity.ok().body(houseService.findHouseDealByHouseId(houseId));
+    }
+
+
 
 }

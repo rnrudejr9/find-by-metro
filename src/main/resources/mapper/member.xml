@@ -19,6 +19,20 @@
 		from members
 		where user_id = #{userId} and user_password = #{userPwd}
 	</select>
+
+	<insert id="join" parameterType="map">
+		insert into members(
+			user_id, user_name, user_password, email_id, email_domain, join_date, token
+		) values (
+					 #{userId},
+					 #{userName},
+					 #{userPwd},
+					 #{emailId},
+					 #{emailDomain},
+					 #{joinDate},
+					 #{refreshToken}
+				 )
+	</insert>
 	
 	<select id="userInfo" parameterType="string" resultMap="member">
 		select user_name, user_id, email_id, email_domain, join_date
